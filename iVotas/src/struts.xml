@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The core configuration file for the framework is the default (struts.xml) file
+and should reside on the classpath of the webapp (generally /WEB-INF/classes). -->
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+  <!-- devMode equals debug information and reload everything for every request -->
+  <constant name="struts.devMode" value="true" />
+  <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.action.excludePattern" value="/ws"/>
+  
+
+  <package name="Admin" extends="struts-default">
+  
+  
+	 <interceptors>
+	        <interceptor class="interceptors.loginInterceptor" name="loginInterceptor">
+	        </interceptor>
+	        <interceptor-stack name="loginStack">
+	            <interceptor-ref name="loginInterceptor" />
+	            <interceptor-ref name="defaultStack" />
+	        </interceptor-stack>
+        </interceptors>
+        
+	<default-action-ref name="login" />
+	
+	<global-results>
+		<result name="error">/error.jsp</result>
+		<result name="loginRedirect" type="redirect">/signin.jsp</result>
+	</global-results>
+	
+   
+	<!-- all exceptions not caught by the application will lead to error.jsp -->
+	<global-exception-mappings>
+		<exception-mapping exception="java.lang.Exception" result="error" />
+	</global-exception-mappings>
+	<action name="login">	
+      <result>/signin.jsp</result>
+    </action>
+	
+ 	<action name="gotoRegister">
+ 		    <interceptor-ref name="loginStack" />
+            <result>/register.jsp</result>
+   	</action>
+   	
+		<action name="gotoChoosePastElection">
+			<interceptor-ref name="loginStack" />
+			<result>choosePastElections.jsp</result>
+		</action>
+		
+   	<action name="gotoHomepage">
+   		<interceptor-ref name="loginStack" />
+            <result>/login.jsp</result>
+   	</action>
+   	
+		<action name="createElection" class="action.createElectionAction"
+			method="execute">
+			<interceptor-ref name="loginStack" />
+			<result name="success">createElection.jsp</result>
+			<result name="failure">createElection.jsp</result>
+			<result name="none">createElection.jsp</result>
+		</action>
+
+   	  <action name="addDepartment" class="action.manageDepartment" method="addDepartment">
+   	  			<interceptor-ref name="loginStack" />
+   			<result name="success">addDepartment.jsp</result>
+            <result name="failure">addDepartment.jsp</result>
+            <result name="none">addDepartment.jsp</result>
+           
+   	</action>
+   	
+   	
+   	<action name="removeDepartment" class="action.manageDepartment" method="removeDepartment">
+   			<interceptor-ref name="loginStack" />   	
+   			<result name="success">delDepartment.jsp</result>
+            <result name="failure">delDepartment.jsp</result>
+            <result name="none">delDepartment.jsp</result>         
+   	</action>
+   	
+   	
+   	<action name="editDepartment" class="action.manageDepartment" method="editDepartment">
+   				<interceptor-ref name="loginStack" />   	
+   			<result name="success">editDepartment.jsp</result>
+            <result name="failure">editDepartment.jsp</result>
+            <result name="none">editDepartment.jsp</result>
+            
+           
+   	</action>
+   		<action name="addTable" class="action.manageTables" method="addTable">
+   					<interceptor-ref name="loginStack" />   		
+   			<result name="success">addTable.jsp</result>
+            <result name="failure">addTable.jsp</result>
+            <result name="none">addTable.jsp</result>
+           
+   	</action>
+   	
+   		<action name="removeTable" class="action.manageTables" method="removeTable">
+   			<interceptor-ref name="loginStack" />   		
+   			<result name="success">delTable.jsp</result>
+            <result name="failure">delTable.jsp</result>
+
+           
+   	</action>
+   	<action name="register" class="action.registerAction" method="execute">
+   				<interceptor-ref name="loginStack" />   	
+            <result name="success">register.jsp</result>
+            <result name="failure">register.jsp</result>
+            <result name="none">register.jsp</result>
+    </action>
+    
+    <action name="getDepartments" class="action.registerAction" method="getDepartments">   
+    	<interceptor-ref name="loginStack" />
+        	<result>login.jsp</result>
+    </action>
+    
+      <action name="getElect" class="action.createListAction" method="Elections">
+		      <interceptor-ref name="loginStack" />
+              <result>login.jsp</result>
+    	</action>
+    
+   <action name="createList" class="action.createListAction" method="execute">
+   			<interceptor-ref name="loginStack" />   
+   			<result name="success">createList.jsp</result>
+            <result name="failure">createList.jsp</result>
+            <result name="none">createList.jsp</result>
+           
+   	</action>
+   	
+   	
+   	 <action name="searchVote" class="action.searchVoteAction" method="execute">
+   	 			<interceptor-ref name="loginStack" />
+   	 
+   			<result name="success">searchVote.jsp</result>
+			<result name="failure">searchVote.jsp</result>
+           
+   	</action>
+
+   	
+	<action name="gotoSearchVote">
+				<interceptor-ref name="loginStack" />
+		<result>searchVote.jsp</result>
+	</action>
+	
+	
+	<action name="gotoAddDepartment">
+		<interceptor-ref name="loginStack" />
+		<result>addDepartment.jsp</result>
+	</action>
+	
+	
+	<action name="gotoDelDepartment">
+			<interceptor-ref name="loginStack" />
+			<result>delDepartment.jsp</result>
+	</action>
+	
+	
+	<action name="gotoEditDepartment">
+			<interceptor-ref name="loginStack" />
+   	   	  	<result>editDepartment.jsp</result>
+	</action>
+	
+	
+		<action name="gotoAddTable">
+			<interceptor-ref name="loginStack" />
+			<result>addTable.jsp</result>
+	</action>
+	
+	
+	<action name="gotoDelTable">
+			<interceptor-ref name="loginStack" />
+   	   		<result>delTable.jsp</result>
+	</action>
+	<action name="gotoCreateElection">
+		<interceptor-ref name="loginStack" />
+   	   	<result>createElection.jsp</result>
+   	   	
+	</action>
+		<action name="gotoCreateList">
+			<interceptor-ref name="loginStack" />
+   	   	  	<result>createList.jsp</result>
+	</action>
+	
+	  	
+	 	<action name="gotoOnline">
+			<interceptor-ref name="loginStack" />
+   	   	  	<result>onlineUsers.jsp</result>
+	</action>
+	
+	  	
+	  	
+	 	<action name="gotoChooseUser">
+			<interceptor-ref name="loginStack" />
+   	   	  	<result>chooseUser.jsp</result>
+	</action>
+	
+	
+   	<action name="getVoted" class="action.searchVoteAction" method="getVotedElections">
+   			<interceptor-ref name="loginStack" />   	
+   			<result name="success">searchVote.jsp</result>
+            <result name="failure">login.jsp</result>
+           
+   	</action>
+   		<action name="showElections" class="action.createElectionAction"
+            method="detailElection">
+            			<interceptor-ref name="loginStack" />            
+            		<result name="success">detailElection.jsp</result>
+            		<result name="failure">login.jsp</result>
+ 
+        </action>
+ 
+<action name="getElections" class="action.createElectionAction" method="getElections">
+			<interceptor-ref name="loginStack" />
+            <result>login.jsp</result>
+      </action>
+        
+				<action name="showResultsElections" class="action.createElectionAction"
+			method="detailElection">
+						<interceptor-ref name="loginStack" />
+			<result name="success">resultElection.jsp</result>
+			<result name="failure">login.jsp</result>
+
+		</action>
+		
+ 		<action name="getPastElections" class="action.createElectionAction"
+			method="getPastElections">
+						<interceptor-ref name="loginStack" />
+			<result>resultElections.jsp</result>
+		</action>
+    <action name="gotoHomepage">
+    			<interceptor-ref name="loginStack" />    
+            <result>/login.jsp</result>
+        </action>
+ 
+<action name="gotoChooseElection">
+			<interceptor-ref name="loginStack" />
+            <result>chooseElection.jsp</result>
+        </action>
+        
+        
+        <action name="gotoeditElection" class="action.createElectionAction"
+            method="putElection">
+            			<interceptor-ref name="loginStack" />            
+            <result>editElection.jsp</result>
+        </action>
+ 
+<action name="editElection" class="action.createElectionAction" method="editElection">
+			<interceptor-ref name="loginStack" />
+            <result name="success">editElection.jsp</result>
+            <result name="failure">editElection.jsp</result>
+            <result name="none">editElection.jsp</result>
+        </action>
+   <action name="getActiveElections" class="action.loginAction" method="getActiveElections">
+   <interceptor-ref name="loginStack" />
+   			<result>userMenu.jsp</result>
+   </action>
+   
+   <action name="vote" class="action.loginAction" method="voteOnElection">
+   		<interceptor-ref name="loginStack" />
+   		<result>userMenu.jsp</result>
+   </action>
+   
+   
+  <action name="goVote" class="action.createElectionAction" method="detailElection">
+  		<interceptor-ref name="loginStack" />
+   		<result name="success">vote.jsp</result>
+  </action>
+ 
+  <action name="loginfacebookCode" class="action.loginAction" method="loginFacebook">
+ 			 <interceptor-ref name="loginStack" />
+  			<result name="success">userMenu.jsp</result>
+  			<result name="failure">signin.jsp</result>
+  </action>
+  
+  <action name="facebookPost" class="action.loginAction" method="postFace">
+  				<interceptor-ref name="loginStack" />
+			  	<result>userMenu.jsp</result>
+  </action>
+  
+  <action name="gotoUserMenu">
+  		<interceptor-ref name="loginStack" />
+   	   	<result>userMenu.jsp</result>
+  </action>
+  
+  <action name="facebookCode" class="action.loginAction" method="userFacebook">
+  			<interceptor-ref name="loginStack" />
+   	   	  	<result name="success">userMenu.jsp</result>
+  			<result name="failure">userMenu.jsp</result>
+  </action>
+  
+  
+  <action name="sign" class="action.loginAction" method="execute">  
+            <result name="success">/userMenu.jsp</result>
+            <result name="failure">/signin.jsp</result>
+            <result name="admin">/login.jsp</result>
+        </action>
+        
+        
+ <action name="gotoUserMenu">
+ 		    <interceptor-ref name="loginStack" /> 
+            <result>/userMenu.jsp</result>
+   	</action>
+   	
+   	
+   	<action name="gotoEditUser">
+ 		    <interceptor-ref name="loginStack" /> 
+            <result>/chooseUser.jsp</result>
+   	</action>
+   	
+   	
+   	<action name="Usernames" class="action.editUsersAction" method="usernames">
+			<interceptor-ref name="loginStack" />
+   	  			<result name="failure">signin.jsp</result>
+    </action>
+    
+    <action name="chooseUser" class="action.editUsersAction" method="chooseUser">
+			<interceptor-ref name="loginStack" />
+   	  			<result name="success">/editUser.jsp</result>
+    </action>
+   	
+   	<action name="editUser" class="action.editUsersAction" method="editUser">
+			<interceptor-ref name="loginStack" />
+   	  			<result name="success">/chooseUser.jsp</result>
+   	  			<result name="failure">/chooseUser.jsp</result>
+    </action>
+
+</package>
+</struts>

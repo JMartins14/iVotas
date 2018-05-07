@@ -1,0 +1,80 @@
+::TESTES::
+ . Criar um departamento ( type | add_department; department | fctuc) -> Sucesso
+ . Falha ao criar um departamento já existente (type | add_department; department | fctuc) -> Sucesso
+ . Falha ao criar departamento sem indicar nome ( type | add_department) -> Sucesso
+ . Editar um departamento existente(type | edit_department; old_name | fctuc; new_name | feuc) -> Sucesso
+ :::. Criar departament fctuc;
+ . Falha ao Editar o departamento para um que já exitse (type | edit_department; old_name | fctuc; new_name | feuc) Sucesso
+ . Falha ao Editar um departamento que não existe (type | edit_department; old_name | fduc; new_name | feuc) -> Failed
+ . Falha a Editar um departamento sem indicar o novo nome (type | edit_department; old_name | fctuc;) -> Failed
+ . Falha a Editar um departamento sem indicar o nome antigo (type | edit_department; new_name | feuc;) -> Failed
+ . Remover um departamento existente (type | remove_department; department | fctuc) -> Sucesso
+ . Falha ao Remover um departamento que não existe (type | remove_department; department | fduc) -> Failed
+ . Falha ao Remover um departamento sem indicar o nome ( type | remove_department;) -> Failed
+ :::. Criar 3 departamentos
+  . Lista todos os departamentos existentes( type | list_departments;) -> Sucesso
+
+ . Registar um user estudante(type | register ; username | pierre ; password | omidyar ; category | stud ; address  | Coimbra; department | FCTUC; ccnumber | 123456789; telephone | 123456789; date | 22/07/2018)
+ . Falha ao Registar um user sem algum dos argumentos
+ . Falha ao Registar um user que ja existe
+ . Falha ao registar um user com cc igual
+ . Registar uma password que ja existe
+ ::. Registar um user professor
+ . Create_Election de conselho geral(type | create_election; category | conselhogeral; title | Eleicoes; description | qualquer uma; start | 10/07/2017-00:00; end | 11/07/2018-00:00)
+ . Falha ao Criar eleicao sem algum dos argumentos
+ . Falha ao criar uma eleicao com o mesmo titulo
+ . Falha ao criar uma eleicao que ja acabou
+  . Cria uma eleicao que ja comecou
+::. Registar uma eleicao do nucleo estudantes no departamento fduc
+::. criar um User funcionario no departamento fduc
+. lista todas as eleicoes (type | list_elections)
+ 
+. Criar uma lista numa eleicao existente (type | create_list; numcandidates | 2; election_id | 0; name | Lista ABC; typeList | stud; candidate_0_name | castilho; candidate_1_name | pedro;
+. Falha ao Criar uma lista numa eleicao que nao existe
+. Falha ao Criar uma lista com o mesmo titulo na mesma eleicao
+. Cria uma lista com o mesmo titulo noutra eleicao
+. Criar lista com menos argumentos
+. falha ao Criar uma lista de docs numa eleicao de nucleo de estudantes 
+::. Criar 2 listas em eleicoes diferentes e tipos diferentes
+. lista todas as listas numa eleicao existe pelo id do leilao(type | list_candidateslist; election_id | 0
+. Falha ao listar todas as listas numa eleicao existe pelo nome do leilao
+. falha ao listar todas as listas num leilao que nao existe
+. lista listas num leilao sem listas
+
+. Adicionar uma table a uma eleicao existente (type | add_table; department; fctuc; username | mesa1; election_id | 0; password | pass1
+. Falha ao Adicionar uma table a um leilao nao existente
+. Falha ao Adicionar uma table com um departamento que nao existe
+. Falha ao Adicionr uma table com um departamento diferente da eleicao no caso de nucleo de estudantes
+. Falha ao Adicionar com menos argumentos
+
+. Conectar tcp com table existente;
+. Falha ao conectar tcp com uma table nao existente;
+. (?) Falha ao conectar tcp numa mesma porta
+. Fazer login com dados corretos
+. Falha ao fazer login com dados errados
+. Identificar eleitor existente
+. Falha ao identificar eleitor nao existente
+. Nao desbloquear nenhuma terminal quando elas tiverem a ser usadas
+ 
+ . Votar numa lista do mesmo tipo
+ . Falha ao votar numa lista de outro tipo
+ . falha ao votar numa eleicao que não tenha permissao
+ . falha a Votar mais que uma vez numa eleicao
+ . falha a Votar numa eleicao que ja tenha acabado
+ . falha a Votar numa eleicao que ainda nao tenha comecado
+
+ . Dar detalhes de voto de um user que ja votou por ccnumber ou nome(type | detail_vote; username | pierre2;
+ . Falha ao dar detalhes de um user que nao votou
+ . Dados corretos dos detalhes
+ 
+ . Lista todas as mesas e terminais abertos (type | list_tables
+ . Lista todos os numeros de votos nas mesas em cada eleicao (type | votes_election; election_id | 0
+ . Lista todos as estatisticas de uma eleicao que ja passou (type | stats_election; election_id | 8
+ . Falha ao listar estatisticas de uma eleicao que ainda nao acabou
+ . falha ao listar estatisticas de uma eleicao que nao existe
+ 
+ 
+ 
+ 
+
+ 
